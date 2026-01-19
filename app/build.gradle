@@ -1,0 +1,102 @@
+```groovy
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+// This file is essential for setting up project-wide settings and dependencies.
+buildscript {
+    repositories {
+        // Repositories that host the libraries used in the project
+        google() // Google's Maven repository for Android libraries
+        mavenCentral() // Maven Central repository for Java libraries
+    }
+    dependencies {
+        // Classpath dependency for the Android Gradle plugin
+        classpath 'com.android.tools.build:gradle:8.1.1' // Android Gradle plugin version
+    }
+}
+
+// This block defines the Android project settings and configurations.
+plugins {
+    id 'com.android.application' // Apply the Android application plugin
+}
+
+android {
+    namespace 'com.madhub.instagramgroupmanage' // Unique identifier for the application
+    compileSdk 34 // The SDK version to compile against
+
+    defaultConfig {
+        applicationId "com.madhub.instagramgroupmanage" // Application ID for the app
+        minSdk 21 // Minimum SDK version for compatibility
+        targetSdk 34 // Target SDK version for the app
+        versionCode 1 // Internal version code
+        versionName "1.0.0" // User-visible version string
+        resConfigs "en" // Specify the supported language resources
+
+        // Enables multidex support, which is necessary for handling methods exceeding the limit in the DEX file
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false // Disable code shrinking for release builds
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro' // ProGuard rules for obfuscation
+        }
+        debug {
+            applicationIdSuffix ".debug" // Suffix for debug builds to distinguish from release builds
+            versionNameSuffix "-dev" // Suffix for version name in debug builds
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17 // Set source compatibility to Java 17
+        targetCompatibility JavaVersion.VERSION_17 // Set target compatibility to Java 17
+    }
+
+    // This section allows specifying Kotlin options if using Kotlin language features
+    kotlinOptions {
+        jvmTarget = '17' // Set the JVM target version for Kotlin
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.12.0' // Core KTX library for enhanced Kotlin support
+    implementation 'androidx.appcompat:appcompat:1.7.0' // Compatibility library for backward compatibility
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4' // ConstraintLayout for flexible UI design
+    implementation 'com.google.android.material:material:1.13.0' // Material Design components for modern UI
+
+    // Dependencies relevant to social media management and automation
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0' // Retrofit library for handling network requests
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0' // GSON converter for JSON serialization
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2' // Logging interceptor for network request logging
+
+    // Multidex support if the application exceeds the 64K method limit
+    implementation 'androidx.multidex:multidex:2.0.1' 
+
+    // Room database for local storage and data management, essential for caching and state management
+    implementation 'androidx.room:room-runtime:2.5.2' // Room runtime library
+    kapt 'androidx.room:room-compiler:2.5.2' // Annotation processor for Room
+
+    // Coroutine support for asynchronous programming
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3' // Coroutines for handling background tasks
+
+    // Dependency injection for improved code management and testing
+    implementation 'com.google.dagger:hilt-android:2.46' // Hilt library for DI in Android
+    kapt 'com.google.dagger:hilt-compiler:2.46' // Hilt compiler for annotation processing
+}
+
+// The above dependencies facilitate the implementation of a robust Instagram group management tool
+// The architecture promotes modularity, maintainability, and adherence to best development practices.
+// These dependencies, along with MadHub's capabilities, enable seamless social media management and automation,
+// allowing for a fluid user experience while ensuring compliance with platform guidelines.
+```
+
+### Explanation of Key Choices:
+1. **Gradle Plugin Version**: Specifying the latest plugin version ensures that you have access to the newest features and optimizations.
+   
+2. **Kotlin Coroutines**: Leveraging coroutines for asynchronous tasks improves readability and maintainability in managing network operations and background processes.
+
+3. **Retrofit and OkHttp**: Using Retrofit for API calls paired with OkHttp's logging capabilities supports effective communication with Instagram's APIs, essential for an automation tool.
+
+4. **Room Database**: Integrating the Room persistence library allows for efficient data handling, crucial for maintaining user settings and cached data without frequent network calls.
+
+5. **Dependency Injection with Hilt**: Utilizing Hilt promotes clean architecture and easier testing by decoupling dependencies, which is a best practice for Android development.
+
+The chosen architecture ensures high-performance, maintainability, and adherence to best practices, essential for a social media management tool like the one being developed within the MadHub ecosystem.
